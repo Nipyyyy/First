@@ -50,7 +50,7 @@ export function Navbar({ current, onNavigate }: NavbarProps) {
     <header className="site-header">
       <div className="container header-inner">
         <button className="brand" onClick={() => go('home')} aria-label="First Step início">
-          <span className="brand-mark"><public/logo.png size={17} strokeWidth={2.3} /></span>
+          <span className="brand-mark"><Sparkles size={17} strokeWidth={2.3} /></span>
           <span>first<span>step</span></span>
         </button>
 
