@@ -7,7 +7,6 @@ import {
   BriefcaseBusiness,
   Newspaper,
   GraduationCap,
-  Sparkles,
   X,
   Rss,
   UserCircle,
@@ -33,54 +32,42 @@ export const NAV_ITEMS: { id: PageId; label: string; icon: typeof House }[] = [
   { id: 'profile', label: 'Perfil', icon: UserCircle },
 ];
 
-type NavbarProps = {
-  current: PageId;
-  onNavigate: (page: PageId) => void;
-};
-
-export function Navbar({ current, onNavigate }: NavbarProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const go = (page: PageId) => {
-    onNavigate(page);
-    setMenuOpen(false);
-  };
+export function Sidebar({ current, onNavigate }: { current: PageId; onNavigate: (page: PageId) => void }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const go = (page: PageId) => { onNavigate(page); setMobileOpen(false); };
 
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <button className="brand" onClick={() => go('home')} aria-label="First Step início">
-          <span className="brand-mark"><Sparkles size={17} strokeWidth={2.3} /></span>
-          <span>first<span>step</span></span>
-        </button>
-
-        <nav className={`main-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Navegação principal">
+    <>
+      <header className="mobile-topbar">
+        <button className="mobile-menu-btn" onClick={() => setMobileOpen(true)} aria-label="Abrir menu"><Menu size={22} /></button>
+        <button className="mobile-brand" onClick={() => go('home')} aria-label="First Step"><img src="/logo.png" alt="First Step" className="sidebar-logo" /></button>
+        <div style={{ width: 22 }} />
+      </header>
+      {mobileOpen && <div className="sidebar-overlay" onClick={() => setMobileOpen(false)} />}
+      <aside className={`sidebar ${mobileOpen ? 'is-open' : ''}`}>
+        <div className="sidebar-header">
+          <button className="sidebar-brand" onClick={() => go('home')} aria-label="First Step">
+            <img src="/logo.png" alt="First Step" className="sidebar-logo" />
+            <span className="sidebar-brand-text">First<span>Step</span></span>
+          </button>
+          <button className="sidebar-close" onClick={() => setMobileOpen(false)} aria-label="Fechar"><X size={20} /></button>
+        </div>
+        <nav className="sidebar-nav" aria-label="Navegação">
           {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
-            <button
-              key={id}
-              onClick={() => go(id)}
-              className={current === id ? 'active' : ''}
-            >
-              <Icon size={15} />
-              {label}
+            <button key={id} onClick={() => go(id)} className={`sidebar-nav-item ${current === id ? 'active' : ''}`}>
+              <Icon size={18} /><span>{label}</span>
             </button>
           ))}
         </nav>
-
-        <div className="header-actions">
-          <button className="button button-small button-blue" onClick={() => go('profile')}>
-            Meu perfil <ArrowRight size={15} />
-          </button>
+        <div className="sidebar-footer">
+          <div className="sidebar-cta">
+            <div className="sidebar-cta-icon"><ArrowRight size={16} /></div>
+            <div><strong>Pronto para começar?</strong><span>Crie seu perfil e dê o primeiro passo.</span></div>
+          </div>
+          <button className="button button-blue button-small sidebar-cta-btn" onClick={() => go('profile')}>Meu perfil <ArrowRight size={14} /></button>
         </div>
-        <button
-          className="menu-toggle"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-    </header>
+      </aside>
+    </>
   );
 }
 
@@ -88,11 +75,10 @@ export function Footer({ onNavigate }: { onNavigate: (page: PageId) => void }) {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
-        <button className="brand" onClick={() => onNavigate('home')}>
-          <span className="brand-mark"><Sparkles size={17} strokeWidth={2.3} /></span>
-          <span>first<span>step</span></span>
-        </button>
-        <span>Feito para quem está começando.</span>
+        <div className="footer-brand">
+          <img src="/logo.png" alt="First Step" className="footer-logo" />
+          <div><strong>First Step</strong><span>Feito para quem está começando.</span></div>
+        </div>
         <div className="footer-links">
           <button onClick={() => onNavigate('feed')}>Feed</button>
           <button onClick={() => onNavigate('forum')}>Fórum</button>
@@ -139,9 +125,5 @@ export function timeAgo(dateStr: string): string {
 }
 
 export function formatDate(dateStr: string): string {
-  return new Date(dateStr).toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  });
+  return new Date(dateStr).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
 }
