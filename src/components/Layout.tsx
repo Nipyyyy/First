@@ -76,7 +76,6 @@ export function Footer({ onNavigate }: { onNavigate: (page: PageId) => void }) {
     <footer className="site-footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <img src="/logo.png" alt="First Step" className="footer-logo" />
           <div><strong>First Step</strong><span>Feito para quem está começando.</span></div>
         </div>
         <div className="footer-links">
