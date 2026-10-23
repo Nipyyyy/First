@@ -93,6 +93,17 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
             <div><strong>+12 mil jovens</strong><span>já deram o primeiro passo</span></div>
           </div>
         </div>
+        <div className="hero-visual" aria-hidden="true">
+          <div className="hero-visual-ring hero-visual-ring-one" />
+          <div className="hero-visual-ring hero-visual-ring-two" />
+          <div className="hero-visual-card">
+            <img src={aiImage} alt="" />
+            <span className="hero-visual-label">FIRST STEP / 2026</span>
+            <strong>IDEIAS<br /><em>EM MOVIMENTO.</em></strong>
+          </div>
+          <div className="hero-floating-note hero-floating-note-top"><span /> FUTURO EM CONSTRUÇÃO</div>
+          <div className="hero-floating-note hero-floating-note-bottom"><strong>+12K</strong><span>jovens conectados</span></div>
+        </div>
         <div className="hero-bottom container">
           <div className="scroll-cue"><span className="scroll-line" /> Role para explorar</div>
           <span className="hero-index">01 <i /> 05</span>
