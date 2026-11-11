@@ -5,7 +5,7 @@ import {
   Menu,
   MessageCircle,
   BriefcaseBusiness,
-  Newspaper,
+  Lightbulb,
   GraduationCap,
   X,
   Rss,
@@ -16,14 +16,14 @@ import {
   PlayCircle,
 } from 'lucide-react';
 
-export type PageId = 'home' | 'feed' | 'forum' | 'jobs' | 'news' | 'senac' | 'profile' | 'ebooks' | 'ai' | 'content' | 'courses';
+export type PageId = 'home' | 'feed' | 'forum' | 'jobs' | 'tips' | 'senac' | 'profile' | 'ebooks' | 'ai' | 'content' | 'courses';
 
 export const NAV_ITEMS: { id: PageId; label: string; icon: typeof House }[] = [
   { id: 'home', label: 'Início', icon: House },
   { id: 'feed', label: 'Feed', icon: Rss },
   { id: 'forum', label: 'Fórum', icon: MessageCircle },
   { id: 'jobs', label: 'Vagas', icon: BriefcaseBusiness },
-  { id: 'news', label: 'Notícias', icon: Newspaper },
+  { id: 'tips', label: 'Dicas', icon: Lightbulb },
   { id: 'courses', label: 'Cursos', icon: PlayCircle },
   { id: 'ebooks', label: 'E-books', icon: BookOpen },
   { id: 'content', label: 'Conteúdos', icon: Layers },
@@ -82,7 +82,7 @@ export function Footer({ onNavigate }: { onNavigate: (page: PageId) => void }) {
           <button onClick={() => onNavigate('feed')}>Feed</button>
           <button onClick={() => onNavigate('forum')}>Fórum</button>
           <button onClick={() => onNavigate('jobs')}>Vagas</button>
-          <button onClick={() => onNavigate('news')}>Notícias</button>
+          <button onClick={() => onNavigate('tips')}>Dicas</button>
           <button onClick={() => onNavigate('courses')}>Cursos</button>
           <button onClick={() => onNavigate('ebooks')}>E-books</button>
           <button onClick={() => onNavigate('content')}>Conteúdos</button>

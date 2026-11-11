@@ -74,25 +74,43 @@ export type SocialPost = {
   link_url: string | null;
   link_title: string | null;
   link_source: string | null;
+  image_url: string | null;
   likes_count: number;
   comments_count: number;
   shares_count: number;
   saves_count: number;
+  is_demo: boolean;
   created_at: string;
 };
 
 export type SocialComment = {
   id: string;
   post_id: string;
+  parent_id: string | null;
   author_name: string;
   content: string;
+  is_demo: boolean;
   created_at: string;
 };
 
-export const FEED_FILTERS = ['Para você', 'Notícias', 'Vagas', 'Estudos', 'Carreira', 'Cursos'] as const;
+export const FEED_FILTERS = ['Para você', 'Dicas', 'Vagas', 'Estudos', 'Carreira', 'Cursos'] as const;
 export const POST_TYPES = [
   { value: 'user', label: 'Publicação' },
   { value: 'question', label: 'Pergunta' },
+  { value: 'celebration', label: 'Conquista' },
+  { value: 'interview', label: 'Entrevista' },
+] as const;
+
+export const TIPS_TOPICS = [
+  'Como se preparar para uma entrevista',
+  'Como criar um currículo profissional',
+  'Como se comportar no primeiro emprego',
+  'Como encontrar oportunidades de trabalho',
+  'Como se destacar em processos seletivos',
+  'Estágio e Jovem Aprendiz: oportunidades',
+  'Direitos e deveres do trabalhador',
+  'Desenvolvimento profissional',
+  'Comunicação e comportamento no trabalho',
 ] as const;
 
 export type Profile = {

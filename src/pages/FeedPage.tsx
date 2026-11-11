@@ -9,23 +9,39 @@ import {
   Sparkles,
   TrendingUp,
   BriefcaseBusiness,
-  Newspaper,
+  Lightbulb,
   GraduationCap,
   HelpCircle,
   User,
+  PartyPopper,
+  Mic,
   Image as ImageIcon,
   Link2,
+  CornerDownRight,
 } from 'lucide-react';
-import { supabase, FEED_FILTERS, type SocialPost, type SocialComment } from '@/lib/supabase';
+import { supabase, FEED_FILTERS, POST_TYPES, type SocialPost, type SocialComment } from '@/lib/supabase';
 import { timeAgo } from '@/components/Layout';
 
 const POST_TYPE_META: Record<string, { icon: typeof User; label: string; color: string }> = {
   user: { icon: User, label: 'Publicação', color: '#3b82f6' },
   question: { icon: HelpCircle, label: 'Pergunta', color: '#0891b2' },
   job: { icon: BriefcaseBusiness, label: 'Vaga', color: '#059669' },
-  news: { icon: Newspaper, label: 'Notícia', color: '#d97706' },
+  news: { icon: TrendingUp, label: 'Notícia', color: '#d97706' },
   firststep: { icon: Sparkles, label: 'First Step', color: '#3b82f6' },
+  celebration: { icon: PartyPopper, label: 'Conquista', color: '#16a34a' },
+  interview: { icon: Mic, label: 'Entrevista', color: '#9333ea' },
+  tip: { icon: Lightbulb, label: 'Dica', color: '#eab308' },
 };
+
+function renderContent(content: string): React.ReactNode {
+  const parts = content.split(/(@[\wÀ-ú]+)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('@')) {
+      return <span key={i} className="mention">{part}</span>;
+    }
+    return part;
+  });
+}
 
 export function FeedPage() {
   const [posts, setPosts] = useState<SocialPost[]>([]);
@@ -33,14 +49,13 @@ export function FeedPage() {
   const [loading, setLoading] = useState(true);
   const [composerOpen, setComposerOpen] = useState(false);
 
-  // Composer state
   const [composerText, setComposerText] = useState('');
   const [composerType, setComposerType] = useState<string>('user');
   const [composerAuthor, setComposerAuthor] = useState('');
   const [composerRole, setComposerRole] = useState('');
+  const [composerImageUrl, setComposerImageUrl] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  // Track liked/saved posts locally (simple, no auth)
   const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
   const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
 
@@ -68,6 +83,8 @@ export function FeedPage() {
         category: 'Para você',
         author_name: composerAuthor.trim() || 'Anônimo',
         author_role: composerRole.trim(),
+        image_url: composerImageUrl.trim() || null,
+        is_demo: false,
       })
       .select()
       .single();
@@ -76,6 +93,7 @@ export function FeedPage() {
       setComposerText('');
       setComposerAuthor('');
       setComposerRole('');
+      setComposerImageUrl('');
       setComposerOpen(false);
     }
     setSubmitting(false);
@@ -108,7 +126,6 @@ export function FeedPage() {
   return (
     <section className="feed-page">
       <div className="feed-layout">
-        {/* Left sidebar */}
         <aside className="feed-sidebar feed-sidebar-left">
           <div className="feed-profile-card">
             <div className="feed-profile-banner" />
@@ -122,7 +139,7 @@ export function FeedPage() {
             {FEED_FILTERS.map((filter) => {
               const icons: Record<string, typeof TrendingUp> = {
                 'Para você': TrendingUp,
-                'Notícias': Newspaper,
+                'Dicas': Lightbulb,
                 'Vagas': BriefcaseBusiness,
                 'Estudos': GraduationCap,
                 'Carreira': BriefcaseBusiness,
@@ -143,9 +160,7 @@ export function FeedPage() {
           </nav>
         </aside>
 
-        {/* Main feed */}
         <div className="feed-main">
-          {/* Filter tabs (mobile + top) */}
           <div className="feed-filter-tabs">
             {FEED_FILTERS.map((filter) => (
               <button
@@ -158,7 +173,6 @@ export function FeedPage() {
             ))}
           </div>
 
-          {/* Composer */}
           <div className="feed-composer">
             <div className="feed-composer-avatar"><Sparkles size={18} /></div>
             {composerOpen ? (
@@ -177,18 +191,21 @@ export function FeedPage() {
                 />
                 <textarea
                   className="form-textarea"
-                  placeholder="Compartilhe algo com a comunidade..."
+                  placeholder="Compartilhe algo com a comunidade... Use @ para mencionar alguém"
                   value={composerText}
                   onChange={(e) => setComposerText(e.target.value)}
                   rows={4}
                   autoFocus
                 />
+                <input
+                  className="form-input"
+                  placeholder="URL de imagem (opcional)"
+                  value={composerImageUrl}
+                  onChange={(e) => setComposerImageUrl(e.target.value)}
+                />
                 <div className="feed-composer-bar">
                   <div className="feed-composer-types">
-                    {[
-                      { value: 'user', label: 'Publicação', icon: User },
-                      { value: 'question', label: 'Pergunta', icon: HelpCircle },
-                    ].map(({ value, label, icon: Icon }) => (
+                    {POST_TYPES.map(({ value, label, icon: Icon }) => (
                       <button
                         key={value}
                         className={composerType === value ? 'active' : ''}
@@ -199,7 +216,7 @@ export function FeedPage() {
                     ))}
                   </div>
                   <div className="feed-composer-actions">
-                    <button className="feed-composer-tool" title="Em breve"><ImageIcon size={17} /></button>
+                    <button className="feed-composer-tool" title="Imagem (URL)"><ImageIcon size={17} /></button>
                     <button className="feed-composer-tool" title="Em breve"><Link2 size={17} /></button>
                     <button
                       className="button button-ghost button-small"
@@ -224,7 +241,6 @@ export function FeedPage() {
             )}
           </div>
 
-          {/* Posts */}
           {loading ? (
             <div className="feed-loading">
               <div className="feed-skeleton" />
@@ -254,7 +270,6 @@ export function FeedPage() {
           )}
         </div>
 
-        {/* Right sidebar */}
         <aside className="feed-sidebar feed-sidebar-right">
           <div className="feed-trending-card">
             <div className="sidebar-header">
@@ -306,6 +321,8 @@ function PostCard({
   const [comments, setComments] = useState<SocialComment[]>([]);
   const [commentText, setCommentText] = useState('');
   const [commentAuthor, setCommentAuthor] = useState('');
+  const [replyTo, setReplyTo] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState('');
   const [loadingComments, setLoadingComments] = useState(false);
   const [submittingComment, setSubmittingComment] = useState(false);
 
@@ -337,6 +354,7 @@ function PostCard({
         post_id: post.id,
         content: commentText.trim(),
         author_name: commentAuthor.trim() || 'Anônimo',
+        is_demo: false,
       })
       .select()
       .single();
@@ -347,6 +365,31 @@ function PostCard({
     }
     setSubmittingComment(false);
   };
+
+  const handleAddReply = async (parentId: string) => {
+    if (!replyText.trim()) return;
+    setSubmittingComment(true);
+    const { data } = await supabase
+      .from('social_comments')
+      .insert({
+        post_id: post.id,
+        parent_id: parentId,
+        content: replyText.trim(),
+        author_name: commentAuthor.trim() || 'Anônimo',
+        is_demo: false,
+      })
+      .select()
+      .single();
+    if (data) {
+      setComments((prev) => [...prev, data as SocialComment]);
+      setReplyText('');
+      setReplyTo(null);
+    }
+    setSubmittingComment(false);
+  };
+
+  const topLevel = comments.filter((c) => !c.parent_id);
+  const repliesOf = (id: string) => comments.filter((c) => c.parent_id === id);
 
   return (
     <article className="feed-post">
@@ -367,22 +410,27 @@ function PostCard({
             <span>{timeAgo(post.created_at)}</span>
           </div>
         </div>
+        {post.is_demo && (
+          <span className="demo-badge" title="Conteúdo de demonstração — publicação fictícia para ilustrar o uso da comunidade">
+            Demo
+          </span>
+        )}
       </div>
 
-      <div className="feed-post-content">{post.content}</div>
+      <div className="feed-post-content">{renderContent(post.content)}</div>
+
+      {post.image_url && (
+        <div className="feed-post-image">
+          <img src={post.image_url} alt="" loading="lazy" />
+        </div>
+      )}
 
       <div className="feed-post-actions">
-        <button
-          className={`feed-action ${liked ? 'liked' : ''}`}
-          onClick={onLike}
-        >
+        <button className={`feed-action ${liked ? 'liked' : ''}`} onClick={onLike}>
           <Heart size={16} fill={liked ? 'currentColor' : 'none'} />
           <span>{post.likes_count}</span>
         </button>
-        <button
-          className="feed-action"
-          onClick={handleToggleComments}
-        >
+        <button className="feed-action" onClick={handleToggleComments}>
           <MessageCircle size={16} />
           <span>{post.comments_count}</span>
         </button>
@@ -390,10 +438,7 @@ function PostCard({
           <Repeat2 size={16} />
           <span>{post.shares_count}</span>
         </button>
-        <button
-          className={`feed-action feed-action-save ${saved ? 'saved' : ''}`}
-          onClick={onSave}
-        >
+        <button className={`feed-action feed-action-save ${saved ? 'saved' : ''}`} onClick={onSave}>
           <Bookmark size={16} fill={saved ? 'currentColor' : 'none'} />
           <span>{post.saves_count}</span>
         </button>
@@ -414,40 +459,82 @@ function PostCard({
             <div className="feed-comment-row">
               <input
                 className="form-input feed-comment-input"
-                placeholder="Escreva um comentário..."
+                placeholder="Escreva um comentário... use @ para mencionar"
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleAddComment(); } }}
               />
-              <button
-                className="button button-blue button-small"
-                onClick={handleAddComment}
-                disabled={submittingComment || !commentText.trim()}
-              >
+              <button className="button button-blue button-small" onClick={handleAddComment} disabled={submittingComment || !commentText.trim()}>
                 <Send size={13} />
               </button>
             </div>
           </div>
           {loadingComments ? (
             <p className="empty-state" style={{ padding: '16px 0' }}>Carregando comentários...</p>
-          ) : comments.length === 0 ? (
+          ) : topLevel.length === 0 ? (
             <p className="empty-state" style={{ padding: '16px 0' }}>Seja o primeiro a comentar!</p>
           ) : (
             <div className="feed-comment-list">
-              {comments.map((c) => (
-                <div key={c.id} className="feed-comment">
-                  <div className="feed-comment-avatar" style={{ background: avatarColor(c.author_name) }}>
-                    {c.author_name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="feed-comment-body">
-                    <div className="feed-comment-meta">
-                      <strong>{c.author_name}</strong>
-                      <span>{timeAgo(c.created_at)}</span>
+              {topLevel.map((c) => {
+                const childReplies = repliesOf(c.id);
+                return (
+                  <div key={c.id}>
+                    <div className="feed-comment">
+                      <div className="feed-comment-avatar" style={{ background: avatarColor(c.author_name) }}>
+                        {c.author_name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="feed-comment-body">
+                        <div className="feed-comment-meta">
+                          <strong>{c.author_name}</strong>
+                          <span>{timeAgo(c.created_at)}</span>
+                          {c.is_demo && <span className="demo-badge demo-badge-sm">Demo</span>}
+                        </div>
+                        <p>{renderContent(c.content)}</p>
+                        <button
+                          className="feed-comment-reply-btn"
+                          onClick={() => { setReplyTo(replyTo === c.id ? null : c.id); setReplyText(''); }}
+                        >
+                          <CornerDownRight size={11} /> Responder
+                        </button>
+                      </div>
                     </div>
-                    <p>{c.content}</p>
+                    {replyTo === c.id && (
+                      <div className="feed-comment-reply-form">
+                        <input
+                          className="form-input feed-comment-input"
+                          placeholder="Escreva sua resposta..."
+                          value={replyText}
+                          onChange={(e) => setReplyText(e.target.value)}
+                          onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleAddReply(c.id); } }}
+                          autoFocus
+                        />
+                        <button className="button button-blue button-small" onClick={() => handleAddReply(c.id)} disabled={submittingComment || !replyText.trim()}>
+                          <Send size={13} />
+                        </button>
+                      </div>
+                    )}
+                    {childReplies.length > 0 && (
+                      <div className="feed-comment-replies">
+                        {childReplies.map((r) => (
+                          <div key={r.id} className="feed-comment feed-comment-reply">
+                            <div className="feed-comment-avatar feed-comment-avatar-sm" style={{ background: avatarColor(r.author_name) }}>
+                              {r.author_name.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="feed-comment-body">
+                              <div className="feed-comment-meta">
+                                <strong>{r.author_name}</strong>
+                                <span>{timeAgo(r.created_at)}</span>
+                                {r.is_demo && <span className="demo-badge demo-badge-sm">Demo</span>}
+                              </div>
+                              <p>{renderContent(r.content)}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

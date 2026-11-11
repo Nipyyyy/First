@@ -11,13 +11,13 @@ import {
   PlayCircle,
   Target,
   TrendingUp,
-  Newspaper,
+  Lightbulb,
 } from 'lucide-react';
 import { Sidebar, Footer, type PageId } from '@/components/Layout';
 import { FeedPage } from '@/pages/FeedPage';
 import { ForumPage } from '@/pages/ForumPage';
 import { JobsPage } from '@/pages/JobsPage';
-import { NewsPage } from '@/pages/NewsPage';
+import { TipsPage } from '@/pages/TipsPage';
 import { SenacPage } from '@/pages/SenacPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { EbooksPage } from '@/pages/EbooksPage';
@@ -45,15 +45,15 @@ const journeyCards = [
 
 const highlightCards = [
   { icon: BriefcaseBusiness, title: 'Vagas', text: 'Oportunidades reais de primeiro emprego, estágio e aprendiz.', page: 'jobs' as PageId },
-  { icon: Newspaper, title: 'Notícias', text: 'Fique por dentro do mercado com notícias atualizadas.', page: 'news' as PageId },
+  { icon: Lightbulb, title: 'Dicas', text: 'Tutoriais e orientações para entrar no mercado de trabalho.', page: 'tips' as PageId },
   { icon: PlayCircle, title: 'Cursos', text: 'Cursos gratuitos para desenvolver suas habilidades.', page: 'courses' as PageId },
   { icon: Bot, title: 'First Step IA', text: 'Sua assistente de carreira com inteligência artificial.', page: 'ai' as PageId },
 ];
 
-const homeNews = [
-  { category: 'Mercado', title: 'Mercado de trabalho cresce para jovens', summary: 'Novos dados mostram aumento de vagas para primeiro emprego.', img: 'https://images.pexels.com/photos/4651145/pexels-photo-4651145.jpeg?auto=compress&cs=tinysrgb&h=400&w=600', source: 'First Step', date: '08 Set 2026' },
-  { category: 'Estágios', title: 'Programas de estágio abrem inscrições', summary: 'Grandes empresas abrem vagas para estudantes de todo o país.', img: 'https://images.pexels.com/photos/4225927/pexels-photo-4225927.jpeg?auto=compress&cs=tinysrgb&h=400&w=600', source: 'First Step', date: '07 Set 2026' },
-  { category: 'Cursos', title: 'Cursos gratuitos online ganham destaque', summary: 'Plataformas oferecem certificados reconhecidos pelo mercado.', img: 'https://images.pexels.com/photos/5530520/pexels-photo-5530520.jpeg?auto=compress&cs=tinysrgb&h=400&w=600', source: 'First Step', date: '06 Set 2026' },
+const homeTips = [
+  { category: 'Entrevistas', title: 'Como se preparar para uma entrevista', summary: 'Pesquise a empresa, treine respostas comuns e chegue confiante.', img: 'https://images.pexels.com/photos/5668863/pexels-photo-5668863.jpeg?auto=compress&cs=tinysrgb&h=400&w=600', source: 'First Step', date: '10 Nov 2026' },
+  { category: 'Currículo', title: 'Como criar um currículo profissional', summary: 'Estrutura, linguagem e formatação para impressionar recrutadores.', img: 'https://images.pexels.com/photos/4101343/pexels-photo-4101343.jpeg?auto=compress&cs=tinysrgb&h=400&w=600', source: 'First Step', date: '09 Nov 2026' },
+  { category: 'Primeiro emprego', title: 'Como se comportar no primeiro emprego', summary: 'Comunicação, postura e dicas para se adaptar ao ambiente de trabalho.', img: 'https://images.pexels.com/photos/7654438/pexels-photo-7654438.jpeg?auto=compress&cs=tinysrgb&h=400&w=600', source: 'First Step', date: '08 Nov 2026' },
 ];
 
 const homeJobs = [
@@ -145,12 +145,12 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
       <section className="section" style={{ paddingTop: '80px' }}>
         <div className="container">
           <div className="opportunity-heading section-heading" style={{ marginBottom: '32px' }}>
-            <div><span className="section-kicker">Notícias em destaque</span><h2>O que está<br /><span>acontecendo agora.</span></h2></div>
-            <button className="underlined-link" onClick={() => onNavigate('news')}>Ver todas as notícias <ArrowRight size={15} /></button>
+            <div><span className="section-kicker">Dicas em destaque</span><h2>Orientação para<br /><span>começar com o pé direito.</span></h2></div>
+            <button className="underlined-link" onClick={() => onNavigate('tips')}>Ver todas as dicas <ArrowRight size={15} /></button>
           </div>
           <div className="home-news-preview">
-            {homeNews.map((item) => (
-              <article key={item.title} className="home-news-card" onClick={() => onNavigate('news')}>
+            {homeTips.map((item) => (
+              <article key={item.title} className="home-news-card" onClick={() => onNavigate('tips')}>
                 <div className="home-news-card-img"><img src={item.img} alt={item.title} loading="lazy" /></div>
                 <div className="home-news-card-body">
                   <span className="post-category">{item.category}</span>
@@ -265,7 +265,7 @@ function App() {
         {page === 'feed' && <FeedPage />}
         {page === 'forum' && <ForumPage />}
         {page === 'jobs' && <JobsPage />}
-        {page === 'news' && <NewsPage />}
+        {page === 'tips' && <TipsPage />}
         {page === 'senac' && <SenacPage />}
         {page === 'profile' && <ProfilePage />}
         {page === 'ebooks' && <EbooksPage />}
