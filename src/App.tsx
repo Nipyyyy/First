@@ -182,23 +182,61 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: '100px' }}>
-        <div className="container">
-          <div className="opportunity-heading section-heading" style={{ marginBottom: '32px' }}>
-            <div><span className="section-kicker">Biblioteca First Step</span><h2>Apostilas e<br /><span>e-books gratuitos.</span></h2></div>
-            <button className="underlined-link" onClick={() => onNavigate('ebooks')}>Ver todos <ArrowRight size={15} /></button>
-          </div>
-          <div className="ebook-carousel">
-            {ebookCarouselItems.map((ebook) => (
-              <div key={ebook.title} className="ebook-carousel-item" onClick={() => onNavigate('ebooks')}>
-                <div className="ebook-carousel-cover"><div className="ebook-carousel-cover-placeholder"><BookOpen size={36} /></div></div>
-                <h3>{ebook.title}</h3>
-                <p>{ebook.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+   
+<section className="section" style={{ paddingTop: '100px' }}>
+  <div className="container">
+    <div className="opportunity-heading section-heading" style={{ marginBottom: '32px' }}>
+      <div>
+        <span className="section-kicker">Biblioteca First Step</span>
+        <h2>Apostilas e<br /><span>e-books gratuitos.</span></h2>
+      </div>
+      <button className="underlined-link" onClick={() => onNavigate('ebooks')}>
+        Ver todos <ArrowRight size={15} />
+      </button>
+    </div>
+
+    <div
+      onClick={() => onNavigate('ebooks')}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '40px',
+        padding: '32px',
+        borderRadius: '20px',
+        background: '#171717',
+        border: '1px solid rgba(255,255,255,0.08)',
+        cursor: 'pointer',
+      }}
+    >
+      <div style={{
+        width: '190px',
+        minWidth: '190px',
+        aspectRatio: '3 / 4',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '10px',
+        background: 'linear-gradient(145deg, #263c70, #101a35)',
+        color: 'white',
+      }}>
+        <BookOpen size={52} />
+      </div>
+
+      <div style={{ flex: 1 }}>
+        <span className="section-kicker">DESTAQUE DA BIBLIOTECA</span>
+        <h3 style={{ fontSize: '28px', margin: '14px 0' }}>
+          {ebookCarouselItems[0]?.title}
+        </h3>
+        <p style={{ opacity: 0.7, lineHeight: 1.7, marginBottom: '20px' }}>
+          {ebookCarouselItems[0]?.desc}
+        </p>
+        <span className="underlined-link">
+          Conhecer apostila <ArrowRight size={15} />
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section className="section" style={{ paddingTop: '40px' }}>
         <div className="container">
