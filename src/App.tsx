@@ -58,7 +58,7 @@ const featuredEbook = {
 const homeCompanies = [
   { name: 'Nubank', logo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1280px-Nubank_logo_2021.svg.png?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=thumbnail', url: 'https://nu.com/pt/carreiras' },
   { name: 'Amazon', logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW_R41Vy_xx1gsPkgKYJt0BLaMF0RTw5xS-eXEEvHZiA&s', url: 'https://www.amazon.jobs/' },
-  { name: 'McDonald\'s', logo: 'https://logo.clearbit.com/mcdonalds.com', url: 'https://br.indeed.com/q-mcdonalds-trabalhe-conosco-l-s%C3%A3o-paulo,-sp-vagas.html?vjk=3c65cb7da84780e7' },
+  { name: 'McDonald\'s', logo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1280px-McDonald%27s_Golden_Arches.svg.png?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=thumbnail', url: 'https://br.indeed.com/q-mcdonalds-trabalhe-conosco-l-s%C3%A3o-paulo,-sp-vagas.html?vjk=3c65cb7da84780e7' },
 ];
 
 function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
