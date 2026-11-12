@@ -17,7 +17,6 @@ import { Sidebar, Footer, type PageId } from '@/components/Layout';
 import { FeedPage } from '@/pages/FeedPage';
 import { JobsPage } from '@/pages/JobsPage';
 import { TipsPage } from '@/pages/TipsPage';
-import { SenacPage } from '@/pages/SenacPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { EbooksPage } from '@/pages/EbooksPage';
 import { AIPage } from '@/pages/AIPage';
