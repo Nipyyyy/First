@@ -20,7 +20,6 @@ import { TipsPage } from '@/pages/TipsPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { EbooksPage } from '@/pages/EbooksPage';
 import { AIPage } from '@/pages/AIPage';
-import { CoursesPage } from '@/pages/CoursesPage';
 
 // Função que remove elementos flutuantes com estilos específicos
 const removeFloating = () => {
