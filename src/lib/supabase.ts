@@ -49,10 +49,20 @@ export type NewsArticle = {
   category: string;
 };
 
+export type SenacOpportunity = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  external_url: string | null;
+  created_at: string;
+};
+
 export const FORUM_CATEGORIES = ['Estudos', 'Trabalho', 'Currículo', 'Entrevistas', 'Carreira', 'Cursos'] as const;
 export const NEWS_CATEGORIES = ['Mercado', 'Cursos', 'Estágios', 'Processos seletivos', 'Oportunidades'] as const;
 export const JOB_TYPES = ['Primeiro emprego', 'Estágio', 'Aprendiz', 'Efetivo'] as const;
 export const JOB_MODALITIES = ['Presencial', 'Híbrido', 'Remoto'] as const;
+export const SENAC_CATEGORIES = ['Estágio', 'Curso', 'Carreira'] as const;
 
 export type SocialPost = {
   id: string;
