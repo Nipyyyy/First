@@ -48,7 +48,7 @@ const homeTips = [
 ];
 
 const aiImage = 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&h=500&w=700';
-const heroImage = '';
+const heroImage = 'https://images.pexels.com/photos/7698712/pexels-photo-7698712.jpeg?auto=compress&cs=tinysrgb&w=1200';
 
 const featuredEbook = {
   title: 'Guia do Primeiro Emprego',
