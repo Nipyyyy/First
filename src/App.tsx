@@ -42,7 +42,7 @@ const journeyCards = [
 const highlightCards = [
   { icon: BriefcaseBusiness, title: 'Vagas', text: 'Oportunidades reais de primeiro emprego, estágio e aprendiz.', page: 'jobs' as PageId },
   { icon: Lightbulb, title: 'Dicas', text: 'Tutoriais e orientações para entrar no mercado de trabalho.', page: 'tips' as PageId },
-  { icon: PlayCircle, title: 'Cursos', text: 'Cursos gratuitos para desenvolver suas habilidades.', page: 'courses' as PageId },
+  
   { icon: Bot, title: 'First Step IA', text: 'Sua assistente de carreira com inteligência artificial.', page: 'ai' as PageId },
 ];
 
