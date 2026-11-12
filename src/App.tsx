@@ -188,7 +188,7 @@ function HomePage({ onNavigate }: { onNavigate: (page: PageId) => void }) {
     <div className="opportunity-heading section-heading" style={{ marginBottom: '32px' }}>
       <div>
         <span className="section-kicker">Biblioteca First Step</span>
-        <h2>Apostilas e<br /><span>e-books gratuitos.</span></h2>
+        <h2>Apostila e<br /><span>e-book gratuito.</span></h2>
       </div>
       <button className="underlined-link" onClick={() => onNavigate('ebooks')}>
         Ver todos <ArrowRight size={15} />
