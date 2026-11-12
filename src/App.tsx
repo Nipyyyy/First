@@ -15,7 +15,6 @@ import {
 } from 'lucide-react';
 import { Sidebar, Footer, type PageId } from '@/components/Layout';
 import { FeedPage } from '@/pages/FeedPage';
-import { ForumPage } from '@/pages/ForumPage';
 import { JobsPage } from '@/pages/JobsPage';
 import { TipsPage } from '@/pages/TipsPage';
 import { SenacPage } from '@/pages/SenacPage';
