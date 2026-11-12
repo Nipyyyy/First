@@ -56,7 +56,7 @@ const featuredEbook = {
 };
 
 const homeCompanies = [
-  { name: 'Nubank', logo: 'https://logo.clearbit.com/nubank.com.br', url: 'https://nu.com/pt/carreiras' },
+  { name: 'Nubank', logo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Nubank_logo_2021.svg/1280px-Nubank_logo_2021.svg.png?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=thumbnail', url: 'https://nu.com/pt/carreiras' },
   { name: 'Amazon', logo: 'https://logo.clearbit.com/amazon.com', url: 'https://www.amazon.jobs/' },
   { name: 'McDonald\'s', logo: 'https://logo.clearbit.com/mcdonalds.com', url: 'https://br.mcdonalds.com/trabalhe-conosco.html' },
 ];
